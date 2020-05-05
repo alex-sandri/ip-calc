@@ -1,9 +1,11 @@
 <script>
-	import { IpAddress } from "./classes/IpAddress";
+    import { IpAddress } from "./classes/IpAddress";
+    
+    let valid = false;
 
 	let showResult = false, isClassfulAddress = false;
 
-	let ipv4Address, subnetMaskDecimalDotNotation, subnetMaskSlashNotation;
+	let ipv4Address, decimalDotSubnetMask, slashSubnetMask;
 
 	let networkAddress, broadcastAddress, maxNumOfHosts;
 
@@ -13,17 +15,19 @@
 	{
 		if (!IpAddress.isValidSubnetMask(subnetMask)) return;
 
-		subnetMaskDecimalDotNotation = IpAddress.convertSubnetMask(subnetMask, "decimal-dot");
-		subnetMaskSlashNotation = IpAddress.convertSubnetMask(subnetMask, "slash");
-	}
+		decimalDotSubnetMask = IpAddress.convertSubnetMask(subnetMask, "decimal-dot");
+		slashSubnetMask = IpAddress.convertSubnetMask(subnetMask, "slash");
+    }
+    
+    const validate = () => valid = IpAddress.isValidIpAddress(ipv4Address) && IpAddress.isValidSubnetMask(decimalDotSubnetMask) && IpAddress.isValidSubnetMask(slashSubnetMask);
 
 	const calc = () =>
 	{
-		networkAddress = IpAddress.getNetworkAddress(ipv4Address, subnetMaskSlashNotation);
-		broadcastAddress = IpAddress.getBroadcastAddress(ipv4Address, subnetMaskSlashNotation);
-		maxNumOfHosts = IpAddress.getMaxNumberOfHosts(subnetMaskSlashNotation);
+		networkAddress = IpAddress.getNetworkAddress(ipv4Address, slashSubnetMask);
+		broadcastAddress = IpAddress.getBroadcastAddress(ipv4Address, slashSubnetMask);
+		maxNumOfHosts = IpAddress.getMaxNumberOfHosts(slashSubnetMask);
 
-		isClassfulAddress = IpAddress.isClassful(ipv4Address, subnetMaskSlashNotation);
+		isClassfulAddress = IpAddress.isClassful(ipv4Address, slashSubnetMask);
 
 		if (isClassfulAddress) addressClass = IpAddress.getClass(ipv4Address);
 
@@ -39,7 +43,8 @@
 		minlength="7"
 		maxlength="15"
 		placeholder="192.168.1.1"
-		bind:value={ipv4Address}>
+		bind:value={ipv4Address}
+        on:input={validate}>
 	<h1>Subnet Mask:</h1>
 	<input
 		type="text"
@@ -47,19 +52,21 @@
 		minlength="9"
 		maxlength="15"
 		placeholder="255.255.255.0"
-		bind:value={subnetMaskDecimalDotNotation}
-		on:input={fillSubnetMaskFields(subnetMaskDecimalDotNotation)}>
+		bind:value={decimalDotSubnetMask}
+		on:input={fillSubnetMaskFields(decimalDotSubnetMask)}
+        on:input={validate}>
 	<input
 		type="text"
 		id="subnet-mask-sn"
 		minlength="2"
 		maxlength="3"
 		placeholder="/24"
-		bind:value={subnetMaskSlashNotation}
-		on:input={fillSubnetMaskFields(subnetMaskSlashNotation)}>
+		bind:value={slashSubnetMask}
+		on:input={fillSubnetMaskFields(slashSubnetMask)}
+        on:input={validate}>
 	<button
 		class="calc"
-		disabled
+		disabled={!valid}
 		on:click={calc}>Calc</button>
 
 	{#if showResult}

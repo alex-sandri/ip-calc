@@ -1,9 +1,13 @@
 <script>
 	import { IpAddress } from "./classes/IpAddress";
 
-	let numOfHostsNeeded, subnetMask;
+    let valid = false;
 
-	const calcSubnetMask = () => subnetMask = IpAddress.minimumSubnetMask(numOfHostsNeeded);
+    let numOfHostsNeeded, subnetMask;
+
+    const validate = () => valid = Number.isInteger(numOfHostsNeeded);
+
+    const calc = () => subnetMask = IpAddress.minimumSubnetMask(numOfHostsNeeded);
 </script>
 
 <div>
@@ -13,11 +17,12 @@
 		id="num-of-hosts"
 		min="0"
 		placeholder="254"
-		bind:value={numOfHostsNeeded}>
+		bind:value={numOfHostsNeeded}
+        on:input={validate}>
 	<button
 		class="calc"
-		disabled
-		on:click={calcSubnetMask}>Calc</button>
+		disabled={!valid}
+		on:click={calc}>Calc</button>
 
 	{#if subnetMask}
 		<div class="result">
