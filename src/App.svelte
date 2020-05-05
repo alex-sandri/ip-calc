@@ -134,6 +134,7 @@
 	input::placeholder
 	{
 		color: var(--secondary-color);
+		opacity: 0.7;
 	}
 	
 	.calc
