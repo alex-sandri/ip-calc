@@ -12,12 +12,12 @@ export class IpAddress
 
 	static isValidSubnetMask (subnetMask)
 	{
-		const decimalDotNotationRegex =
+		const dotDecimalNotationRegex =
 			/^(128|192|224|240|248|252|254|255)\.(0|128|192|224|240|248|252|254|255)\.(0|128|192|224|240|248|252|254|255)\.(0|128|192|224|240|248|252|254)$/;
 
 		const slashNotationRegex = /^\/([1-9]|[1-2][0-9]|3[0-1])$/;
 
-		return decimalDotNotationRegex.test(subnetMask) || slashNotationRegex.test(subnetMask);
+		return dotDecimalNotationRegex.test(subnetMask) || slashNotationRegex.test(subnetMask);
 	}
 
     static convertSubnetMask (subnetMask, toFormat)
@@ -25,7 +25,7 @@ export class IpAddress
         if (!IpAddress.isValidSubnetMask(subnetMask))
             throw new Error("subnet-mask/invalid");
 
-        const fromFormat = subnetMask.startsWith("/") ? "slash" : "decimal-dot";
+        const fromFormat = subnetMask.startsWith("/") ? "slash" : "dot-decimal";
 
 		if (fromFormat === toFormat) return subnetMask;
 
@@ -33,17 +33,17 @@ export class IpAddress
 			return `/${subnetMask.split(".").map(Number).reduce((accumulator, currentValue) => accumulator += currentValue.toString(2).replace(/0/g, "").length, 0)}`;
 		else
 		{
-			let decimalDotSubnetMask = "";
+			let dotDecimalSubnetMask = "";
 			let subnetMaskBits = this.getSubnetBitCount(subnetMask);
 
 			for (let i = 0; i < 4; i++)
 			{
-				decimalDotSubnetMask += `${subnetMaskBits >= 8 ? "255" : parseInt("1".repeat(subnetMaskBits).padEnd(8, "0"), 2)}.`;
+				dotDecimalSubnetMask += `${subnetMaskBits >= 8 ? "255" : parseInt("1".repeat(subnetMaskBits).padEnd(8, "0"), 2)}.`;
 
 				subnetMaskBits -= Math.min(subnetMaskBits, 8);
 			}
 
-			return decimalDotSubnetMask.substr(0, decimalDotSubnetMask.length - 1);
+			return dotDecimalSubnetMask.substr(0, dotDecimalSubnetMask.length - 1);
 		}
     }
 
@@ -91,7 +91,7 @@ export class IpAddress
 
         while (power < numOfHostsNeeded) power *= 2;
 
-        return IpAddress.convertSubnetMask(`/${32 - Math.log2(power)}`, format || "decimal-dot");
+        return IpAddress.convertSubnetMask(`/${32 - Math.log2(power)}`, format || "dot-decimal");
     }
 
     static getAddressInBits (address) { return address.split(".").map(num => parseInt(num).toString(2).padStart(8, "0")).join("."); }

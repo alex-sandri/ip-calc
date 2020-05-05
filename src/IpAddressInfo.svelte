@@ -5,7 +5,7 @@
 
 	let showResult = false, isClassfulAddress = false;
 
-	let ipv4Address, decimalDotSubnetMask, slashSubnetMask;
+	let ipv4Address, dotDecimalSubnetMask, slashSubnetMask;
 
 	let networkAddress, broadcastAddress, maxNumOfHosts;
 
@@ -15,17 +15,17 @@
 	{
 		if (!IpAddress.isValidSubnetMask(subnetMask)) return;
 
-		decimalDotSubnetMask = IpAddress.convertSubnetMask(subnetMask, "decimal-dot");
+		dotDecimalSubnetMask = IpAddress.convertSubnetMask(subnetMask, "dot-decimal");
 		slashSubnetMask = IpAddress.convertSubnetMask(subnetMask, "slash");
     }
     
-    const validate = () => valid = IpAddress.isValidIpAddress(ipv4Address) && IpAddress.isValidSubnetMask(decimalDotSubnetMask) && IpAddress.isValidSubnetMask(slashSubnetMask);
+    const validate = () => valid = IpAddress.isValidIpAddress(ipv4Address) && IpAddress.isValidSubnetMask(dotDecimalSubnetMask) && IpAddress.isValidSubnetMask(slashSubnetMask);
 
     const reset = () =>
     {
         valid = showResult = false;
 
-        ipv4Address = decimalDotSubnetMask = slashSubnetMask = "";
+        ipv4Address = dotDecimalSubnetMask = slashSubnetMask = "";
     }
 
 	const calc = () =>
@@ -53,15 +53,17 @@
 		bind:value={ipv4Address}
         on:input={validate}>
 	<h1>Subnet Mask:</h1>
+	<label for="subnet-mask-ddn">Dot-decimal notation</label>
 	<input
 		type="text"
 		id="subnet-mask-ddn"
 		minlength="9"
 		maxlength="15"
 		placeholder="255.255.255.0"
-		bind:value={decimalDotSubnetMask}
-		on:input={fillSubnetMaskFields(decimalDotSubnetMask)}
+		bind:value={dotDecimalSubnetMask}
+		on:input={fillSubnetMaskFields(dotDecimalSubnetMask)}
         on:input={validate}>
+	<label for="subnet-mask-sn">Slash notation</label>
 	<input
 		type="text"
 		id="subnet-mask-sn"
