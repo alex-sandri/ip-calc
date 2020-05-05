@@ -123,6 +123,7 @@
 	{
 		background-color: var(--primary-color);
 		color: var(--secondary-color);
+		padding: 10px;
 	}
 
 	input:focus
