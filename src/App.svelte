@@ -122,6 +122,7 @@
 	input
 	{
 		background-color: var(--primary-color);
+		color: var(--secondary-color);
 	}
 
 	input:focus
