@@ -117,7 +117,6 @@
 	button:focus,
 	input:focus
 	{
-		outline: none;
 		box-shadow: 0 0 0 calc(var(--border-width) * 2) var(--secondary-color);
 	}
 
@@ -166,6 +165,11 @@
 	:global(*)
 	{
 		box-sizing: border-box;
+	}
+
+	:global(*:focus)
+	{
+		outline: none;
 	}
 
 	@media (prefers-color-scheme: light)
