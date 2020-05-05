@@ -73,7 +73,7 @@ export class IpAddress
         else if (!IpAddress.isValidSubnetMask(subnetMask)) throw new Error("subnet-mask/invalid");
 
         let networkAddress = "";
-        let networkAddressBits = address.split(".").map(num => parseInt(num).toString(2).padStart(8, "0")).join("").substr(0, IpAddress.getSubnetBitCount(subnetMask)).padEnd(32, "1");
+        let networkAddressBits = IpAddress.getAddressInBits(address).replace(/\./g, "").substr(0, IpAddress.getSubnetBitCount(subnetMask)).padEnd(32, "1");
 
         for (let i = 0; i < 4; i++)
         {
@@ -93,4 +93,6 @@ export class IpAddress
 
         return IpAddress.convertSubnetMask(`/${32 - Math.log2(power)}`, format || "decimal-dot");
     }
+
+    static getAddressInBits (address) { return address.split(".").map(num => parseInt(num).toString(2).padStart(8, "0")).join("."); }
 }
