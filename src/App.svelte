@@ -2,12 +2,6 @@
 	import Header from "./Header.svelte";
 	import IpAddressInfo from "./IpAddressInfo.svelte";
 	import NumOfHostsNeeded from "./NumOfHostsNeeded.svelte";
-
-	import { IpAddress } from "./classes/IpAddress";
-
-	let numOfHostsNeeded, subnetMask;
-
-	const calcSubnetMask = () => subnetMask = IpAddress.minimumSubnetMask(numOfHostsNeeded);
 </script>
 
 <svelte:head>
