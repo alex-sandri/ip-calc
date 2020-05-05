@@ -114,7 +114,15 @@
 		transition: var(--transition-duration);
 	}
 
-	button:hover
+	button:focus,
+	input:focus
+	{
+		outline: none;
+		box-shadow: 0 0 0 calc(var(--border-width) * 2) var(--secondary-color);
+	}
+
+	button:hover,
+	button:focus
 	{
 		background-color: var(--primary-color);
 		color: var(--secondary-color);
@@ -124,12 +132,6 @@
 	{
 		background-color: var(--primary-color);
 		color: var(--secondary-color);
-	}
-
-	input:focus
-	{
-		outline: none;
-		box-shadow: 0 0 0 calc(var(--border-width) * 2) var(--secondary-color);
 	}
 
 	input::placeholder
