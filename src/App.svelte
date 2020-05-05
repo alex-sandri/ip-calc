@@ -172,6 +172,27 @@
 		outline: none;
 	}
 
+	:global(::-webkit-scrollbar)
+	{
+		width: auto;
+		height: auto;
+	}
+	
+	:global(::-webkit-scrollbar-track, ::-webkit-scrollbar-corner)
+	{
+		background-color: var(--primary-color);
+	}
+	
+	:global(::-webkit-scrollbar-thumb)
+	{
+		background-color: var(--secondary-color);
+	}
+
+	:global(::-moz-focus-inner)
+	{
+		border: 0;
+	}
+
 	@media (prefers-color-scheme: light)
 	{
 		:global(:root)
