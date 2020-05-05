@@ -41,6 +41,8 @@
 	<title>IP Calculator</title>
 </svelte:head>
 
+<svelte:body on:load={document.body.classList.add("loaded")}/>
+
 <Header/>
 
 <main>
@@ -203,6 +205,11 @@
 		padding: 0;
 		background-color: var(--primary-color);
 		color: var(--secondary-color);
+	}
+
+	:global(body:not(.loaded) *)
+	{
+		transition: none !important;
 	}
 
 	:global(*)
