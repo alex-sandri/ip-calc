@@ -24,6 +24,12 @@
 		padding: var(--spacing);
 	}
 
+	hr
+	{
+		border: calc(var(--border-width) / 2) solid var(--secondary-color);
+		border-radius: var(--border-radius);
+	}
+
 	:global(h1)
 	{
 		margin: 0;
