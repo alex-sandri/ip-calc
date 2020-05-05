@@ -89,7 +89,7 @@
 
 	:global(:root)
 	{
-		--primary-color: #3f3f3f;
+		--primary-color: #181818;
 		--secondary-color: #fff;
 		--spacing: 15px;
 		--border-radius: 5px;
@@ -145,7 +145,7 @@
 		:global(:root)
 		{
 			--primary-color: #fff;
-			--secondary-color: #3f3f3f;
+			--secondary-color: #181818;
 		}
 	}
 </style>
