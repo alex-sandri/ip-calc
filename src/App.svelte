@@ -74,13 +74,28 @@
 		on:click={calc}>Calc</button>
 
 	{#if showResult}
-		<div id="result">
-			<p>Network address: {networkAddress}</p>
-			<p>Broadcast address: {broadcastAddress}</p>
-			<p>Maximum number of hosts: {maxNumOfHosts}</p>
-			<p>Classful: {isClassfulAddress}</p>
+		<div class="result">
+			<p>
+				<span>Network address</span>
+				{networkAddress}
+			</p>
+			<p>
+				<span>Broadcast address</span>
+				{broadcastAddress}
+			</p>
+			<p>
+				<span>Maximum number of hosts</span>
+				{maxNumOfHosts}
+			</p>
+			<p>
+				<span>Classful</span>
+				{isClassfulAddress}
+			</p>
 			{#if isClassfulAddress}
-				<p>Address class: {addressClass}</p>
+				<p>
+					<span>Address class</span>
+					{addressClass}
+				</p>
 			{/if}
 		</div>
 	{/if}
@@ -99,7 +114,12 @@
 		on:click={calcSubnetMask}>Calc</button>
 
 	{#if subnetMask}
-		<p>Subnet mask: {subnetMask}</p>
+		<div class="result">
+			<p>
+				<span>Subnet mask</span>
+				{subnetMask}
+			</p>
+		</div>
 	{/if}
 </main>
 
@@ -155,6 +175,17 @@
 	{
 		display: block;
 		cursor: pointer;
+	}
+
+	.result p
+	{
+		font-weight: 100;
+	}
+
+	.result p span
+	{
+		font-weight: bold;
+		display: block;
 	}
 
 	:global(:root)
