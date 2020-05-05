@@ -98,8 +98,13 @@ export class IpAddress
 
     static isClassful (address, subnetMask)
     {
+        const addressClass = IpAddress.getClass(address);
+        const slashSubnetMask = IpAddress.convertSubnetMask(subnetMask, "slash");
+
         // TODO: Add support for class D and E (this classes do not have a subnet mask)
-        return [ "A", "B", "C" ].includes(IpAddress.getClass(address)) && [ "/8", "/16", "/24" ].includes(IpAddress.convertSubnetMask(subnetMask, "slash"));
+        return (addressClass === "A" && slashSubnetMask === "/8") ||
+            (addressClass === "B" && slashSubnetMask === "/16") ||
+            (addressClass === "C" && slashSubnetMask === "/24");
     }
 
     static getClass (address)
