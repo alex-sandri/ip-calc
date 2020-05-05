@@ -3,7 +3,7 @@
 
     let valid = false;
 
-    let majorNetworkAddress, subnetMask;
+    let majorNetworkAddress, subnetMask, numOfSubnets;
 
     const validate = () => valid = IpAddress.isValidIpAddress(majorNetworkAddress) && IpAddress.isValidSubnetMask(subnetMask);
 
@@ -11,7 +11,7 @@
     {
         valid = false;
 
-        majorNetworkAddress = subnetMask = "";
+        majorNetworkAddress = subnetMask = numOfSubnets = "";
     }
 
 	const calc = () =>
@@ -37,6 +37,14 @@
 		maxlength="15"
 		placeholder="255.255.255.0 or /24"
 		bind:value={subnetMask}
+        on:input={validate}>
+    <label for="num-of-subnets">Number of subnets</label>
+	<input
+		type="number"
+		id="num-of-subnets"
+		min="1"
+		placeholder="4"
+		bind:value={numOfSubnets}
         on:input={validate}>
 	<button
 		class="calc"
