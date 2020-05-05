@@ -107,4 +107,9 @@
 	{/if}
 </div>
 
-<style></style>
+<style>
+	label
+	{
+		margin-bottom: calc(var(--spacing) / 2);
+	}
+</style>
