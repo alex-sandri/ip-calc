@@ -112,6 +112,8 @@
 		border-radius: var(--border-radius);
 		width: 100%;
 		transition: var(--transition-duration);
+		margin: 0;
+		margin-bottom: var(--spacing);
 	}
 
 	button:focus,
