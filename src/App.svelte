@@ -107,6 +107,7 @@
 
 	button, input
 	{
+		padding: 10px;
 		border: var(--border-width) solid var(--secondary-color);
 		border-radius: var(--border-radius);
 		width: 100%;
@@ -123,7 +124,6 @@
 	{
 		background-color: var(--primary-color);
 		color: var(--secondary-color);
-		padding: 10px;
 	}
 
 	input:focus
