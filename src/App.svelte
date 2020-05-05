@@ -41,6 +41,12 @@
 		margin-bottom: var(--spacing);
 	}
 
+	:global(button)
+	{
+		display: block;
+		cursor: pointer;
+	}
+
 	:global(button:focus, input:focus)
 	{
 		box-shadow: 0 0 0 calc(var(--border-width) * 2) var(--secondary-color);
@@ -68,12 +74,6 @@
 	{
 		color: var(--secondary-color);
 		opacity: 0.7;
-	}
-	
-	:global(.calc)
-	{
-		display: block;
-		cursor: pointer;
 	}
 
 	:global(.result p)

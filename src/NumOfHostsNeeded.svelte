@@ -7,6 +7,13 @@
 
     const validate = () => valid = Number.isInteger(numOfHostsNeeded);
 
+    const reset = () =>
+    {
+        valid = false;
+
+        numOfHostsNeeded = subnetMask = "";
+    }
+
     const calc = () => subnetMask = IpAddress.minimumSubnetMask(numOfHostsNeeded);
 </script>
 
@@ -23,6 +30,8 @@
 		class="calc"
 		disabled={!valid}
 		on:click={calc}>Calc</button>
+    <button
+        on:click={reset}>Reset</button>
 
 	{#if subnetMask}
 		<div class="result">

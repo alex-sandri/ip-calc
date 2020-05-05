@@ -21,6 +21,13 @@
     
     const validate = () => valid = IpAddress.isValidIpAddress(ipv4Address) && IpAddress.isValidSubnetMask(decimalDotSubnetMask) && IpAddress.isValidSubnetMask(slashSubnetMask);
 
+    const reset = () =>
+    {
+        valid = showResult = false;
+
+        ipv4Address = decimalDotSubnetMask = slashSubnetMask = "";
+    }
+
 	const calc = () =>
 	{
 		networkAddress = IpAddress.getNetworkAddress(ipv4Address, slashSubnetMask);
@@ -65,9 +72,10 @@
 		on:input={fillSubnetMaskFields(slashSubnetMask)}
         on:input={validate}>
 	<button
-		class="calc"
 		disabled={!valid}
 		on:click={calc}>Calc</button>
+    <button
+        on:click={reset}>Reset</button>
 
 	{#if showResult}
 		<div class="result">
