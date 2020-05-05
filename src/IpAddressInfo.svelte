@@ -110,6 +110,7 @@
 <style>
 	label
 	{
+		display: inline-block;
 		margin-bottom: calc(var(--spacing) / 2);
 	}
 </style>

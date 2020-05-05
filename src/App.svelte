@@ -2,6 +2,7 @@
 	import Header from "./Header.svelte";
 	import IpAddressInfo from "./IpAddressInfo.svelte";
 	import NumOfHostsNeeded from "./NumOfHostsNeeded.svelte";
+	import Vlsm from "./Vlsm.svelte";
 </script>
 
 <svelte:head>
@@ -16,6 +17,8 @@
 	<IpAddressInfo/>
 	<hr>
 	<NumOfHostsNeeded/>
+	<hr>
+	<Vlsm/>
 </main>
 
 <style>
