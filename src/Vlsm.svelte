@@ -5,6 +5,8 @@
 
     let majorNetworkAddress, subnetMask, numOfSubnets;
 
+    let subnetContainer;
+
     const validate = () => valid = IpAddress.isValidIpAddress(majorNetworkAddress) && IpAddress.isValidSubnetMask(subnetMask);
 
     const reset = () =>
@@ -15,7 +17,27 @@
     }
 
 	const calc = () =>
-	{ }
+    { }
+    
+    const createSubnetInputs = () =>
+    {
+        subnetContainer.innerHTML = "";
+        
+        for (let i = 0; i < parseInt(numOfSubnets); i++)
+        {
+            const subnetElement = document.createElement("div");
+
+            subnetElement.classList.add("subnet");
+
+            const subnetNameInput = document.createElement("input");
+
+            subnetNameInput.value = `Subnet${i + 1}`;
+
+            subnetElement.appendChild(subnetNameInput);
+
+            subnetContainer.appendChild(subnetElement);
+        }
+    }
 </script>
 
 <div>
@@ -39,13 +61,18 @@
 		bind:value={subnetMask}
         on:input={validate}>
     <label for="num-of-subnets">Number of subnets</label>
-	<input
-		type="number"
-		id="num-of-subnets"
-		min="1"
-		placeholder="4"
-		bind:value={numOfSubnets}
-        on:input={validate}>
+	<div>
+        <input
+            type="number"
+            id="num-of-subnets"
+            min="1"
+            placeholder="4"
+            bind:value={numOfSubnets}
+            on:input={validate}>
+        <button
+            on:click={createSubnetInputs}>Create</button>
+    </div>
+    <div id="subnets" bind:this={subnetContainer}></div>
 	<button
 		class="calc"
 		disabled={!valid}
