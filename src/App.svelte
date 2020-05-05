@@ -3,13 +3,15 @@
 
 	import { IpAddress } from "./classes/IpAddress";
 
-	let showResult = false;
+	let showResult = false, isClassfulAddress = false;
 
 	let ipv4Address, subnetMaskDecimalDotNotation, subnetMaskSlashNotation;
 
 	let networkAddress, broadcastAddress, maxNumOfHosts;
 
 	let numOfHostsNeeded, subnetMask;
+
+	let addressClass;
 
 	const fillSubnetMaskFields = (subnetMask) =>
 	{
@@ -24,6 +26,10 @@
 		networkAddress = IpAddress.getNetworkAddress(ipv4Address, subnetMaskSlashNotation);
 		broadcastAddress = IpAddress.getBroadcastAddress(ipv4Address, subnetMaskSlashNotation);
 		maxNumOfHosts = IpAddress.getMaxNumberOfHosts(subnetMaskSlashNotation);
+
+		isClassfulAddress = IpAddress.isClassful(ipv4Address, subnetMaskSlashNotation);
+
+		if (isClassfulAddress) addressClass = IpAddress.getClass(ipv4Address);
 
 		showResult = true;
 	}
@@ -72,6 +78,10 @@
 			<p>Network address: {networkAddress}</p>
 			<p>Broadcast address: {broadcastAddress}</p>
 			<p>Maximum number of hosts: {maxNumOfHosts}</p>
+			<p>Classful: {isClassfulAddress}</p>
+			{#if isClassfulAddress}
+				<p>Address class: {addressClass}</p>
+			{/if}
 		</div>
 	{/if}
 
