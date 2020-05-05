@@ -14,7 +14,12 @@
         numOfHostsNeeded = subnetMask = "";
     }
 
-    const calc = () => subnetMask = IpAddress.minimumSubnetMask(numOfHostsNeeded);
+	const calc = () =>
+	{
+		const minimumSubnetMask = IpAddress.minimumSubnetMask(numOfHostsNeeded, "dot-decimal");
+
+		subnetMask = `${minimumSubnetMask} (${IpAddress.convertSubnetMask(minimumSubnetMask, "slash")})`;
+	}
 </script>
 
 <div>
