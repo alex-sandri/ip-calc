@@ -95,4 +95,24 @@ export class IpAddress
     }
 
     static getAddressInBits (address) { return address.split(".").map(num => parseInt(num).toString(2).padStart(8, "0")).join("."); }
+
+    static isClassful (address, subnetMask)
+    {
+        // TODO: Add support for class D and E (this classes do not have a subnet mask)
+        return [ "A", "B", "C" ].includes(IpAddress.getClass(address)) && [ "/8", "/16", "/24" ].includes(IpAddress.convertSubnetMask(subnetMask, "slash"));
+    }
+
+    static getClass (address)
+    {
+        let addressInBits = IpAddress.getAddressInBits(address);
+        let addressClass = "";
+
+        if (addressInBits.startsWith("0")) addressClass = "A";
+        else if (addressInBits.startsWith("10")) addressClass = "B";
+        else if (addressInBits.startsWith("110")) addressClass = "C";
+        else if (addressInBits.startsWith("1110")) addressClass = "D";
+        else if (addressInBits.startsWith("1111")) addressClass = "E";
+
+        return addressClass;
+    }
 }
