@@ -32,7 +32,7 @@
 		placeholder="254"
 		bind:value={numOfHostsNeeded}
 		on:input={validate}
-		on:keypress={e => { if ([ "+", "-", "e", "." ].includes(e.key)) e.preventDefault(); }}>
+		on:keydown={e => { if ([ "+", "-", "e", ".", "unidentified" ].includes(e.key.toLowerCase())) e.preventDefault(); }}>
 	<button
 		disabled={!valid}
 		on:click={calc}>Calc</button>
