@@ -49,19 +49,19 @@
 
 <div>
 	<h1>Variable Length Subnet Mask (VLSM)</h1>
-    <label for="ip-address">IP Address</label>
+    <label for="vlsm-ip-address">IP Address</label>
 	<input
 		type="text"
-		id="ipv4"
+		id="vlsm-ip-address"
 		minlength="7"
 		maxlength="15"
 		placeholder="192.168.1.1"
 		bind:value={ipAddress}
         on:input={validate}>
-	<label for="subnet-mask">Subnet Mask</label>
+	<label for="vlsm-subnet-mask">Subnet Mask</label>
 	<input
 		type="text"
-		id="subnet-mask"
+		id="vlsm-subnet-mask"
 		minlength="2"
 		maxlength="15"
 		placeholder="255.255.255.0 or /24"
