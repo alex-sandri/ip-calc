@@ -5,10 +5,6 @@
 	import Vlsm from "./Vlsm.svelte";
 </script>
 
-<svelte:head>
-	<title>IP Calculator</title>
-</svelte:head>
-
 <svelte:body on:load={document.body.classList.add("loaded")}/>
 
 <Header/>
