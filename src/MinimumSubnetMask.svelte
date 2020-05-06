@@ -5,7 +5,7 @@
 
     let numOfHostsNeeded, subnetMask;
 
-    const validate = () => valid = Number.isInteger(numOfHostsNeeded);
+    const validate = () => valid = Number.isInteger(numOfHostsNeeded) && numOfHostsNeeded > 0;
 
     const reset = () =>
     {
@@ -28,10 +28,11 @@
 	<input
 		type="number"
 		id="num-of-hosts"
-		min="0"
+		min="1"
 		placeholder="254"
 		bind:value={numOfHostsNeeded}
-        on:input={validate}>
+		on:input={validate}
+		on:keydown={e => { if ([ "+", "-", "e", "." ].includes(e.key)) e.preventDefault(); }}>
 	<button
 		disabled={!valid}
 		on:click={calc}>Calc</button>
