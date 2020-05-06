@@ -3,32 +3,27 @@
 
     let valid = false;
 
-    let majorNetworkAddress, subnetMask, numOfSubnets;
+    let ipAddress, subnetMask, numOfSubnets;
 
     let subnetContainer;
 
-    const validate = () => valid = IpAddress.isValidIpAddress(majorNetworkAddress) && IpAddress.isValidSubnetMask(subnetMask);
+    const validate = () => valid = IpAddress.isValidIpAddress(ipAddress) && IpAddress.isValidSubnetMask(subnetMask);
 
     const reset = () =>
     {
         valid = false;
 
-        majorNetworkAddress = subnetMask = numOfSubnets = "";
+        ipAddress = subnetMask = numOfSubnets = "";
     }
 
 	const calc = () =>
     { }
-    
+
     const createSubnetInputs = () =>
     {
-        subnetContainer.innerHTML = "";
-        
-        for (let i = 0; i < parseInt(numOfSubnets); i++)
-        {
-            const subnetElementString = `<div class="subnet"><input class="subnet-name" value="Subnet${i + 1}"><input class="subnet-size"></div>`;
-
-            subnetContainer.insertAdjacentHTML("beforeend", subnetElementString);
-        }
+        for (let i = 0; i < numOfSubnets; i++)
+            subnetContainer.insertAdjacentHTML(
+                "beforeend", `<div class="subnet"><input type="text" class="subnet-name" value="Subnet${i + 1}"><input type="text" class="subnet-size"></div>`);
     }
 </script>
 
@@ -41,7 +36,7 @@
 		minlength="7"
 		maxlength="15"
 		placeholder="192.168.1.1"
-		bind:value={majorNetworkAddress}
+		bind:value={ipAddress}
         on:input={validate}>
 	<label for="subnet-mask">Subnet Mask</label>
 	<input
@@ -58,9 +53,9 @@
             type="number"
             id="num-of-subnets"
             min="1"
+            max="99"
             placeholder="4"
-            bind:value={numOfSubnets}
-            on:input={validate}>
+            bind:value={numOfSubnets}>
         <button
             on:click={createSubnetInputs}>Create</button>
     </div>
@@ -78,5 +73,15 @@
     {
         display: inline-block;
         margin-bottom: calc(var(--spacing) / 2);
+    }
+
+    #subnets :global(.subnet)
+    {
+        display: flex;
+    }
+
+    #subnets :global(.subnet .subnet-size)
+    {
+        margin-left: var(--spacing);
     }
 </style>
