@@ -3,7 +3,7 @@
 
     let valid = false;
 
-    let ipAddress, subnetMask, numOfSubnets;
+    let ipAddress = "172.31.103.0", subnetMask = "/24", numOfSubnets = 5;
 
     let subnetContainer;
 
@@ -21,7 +21,18 @@
 
 	const calc = () =>
     {
+        Array.from(subnetContainer.children).forEach(subnet =>
+        {
+            const minimumSubnetMask = IpAddress.minimumSubnetMask(parseInt(subnet.querySelector(".subnet-size").value), "slash");
 
+            const maxNumOfHosts = IpAddress.getMaxNumberOfHosts(minimumSubnetMask);
+
+            const networkAddress = IpAddress.getNetworkAddress(ipAddress, minimumSubnetMask);
+
+            console.log(minimumSubnetMask, maxNumOfHosts, networkAddress, IpAddress.getFirstUsableHostAddress(ipAddress, minimumSubnetMask), IpAddress.getLastUsableHostAddress(ipAddress, minimumSubnetMask));
+
+            ipAddress = IpAddress.getNthAddress(ipAddress, maxNumOfHosts + 2);
+        });
     }
 
     const createSubnetInputs = () =>

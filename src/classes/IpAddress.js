@@ -120,4 +120,48 @@ export class IpAddress
 
         return addressClass;
     }
+
+    static getFirstUsableHostAddress (address, subnetMask)
+    {
+        let addressInBits = IpAddress.getAddressInBits(IpAddress.getNetworkAddress(address, subnetMask));
+
+        addressInBits = (addressInBits.substr(0, addressInBits.lastIndexOf("0")) + "1").replace(/\./g, "");
+
+        let firstUsableHostAddress = "";
+
+        for (let i = 0; i < 4; i++)
+            firstUsableHostAddress += `${parseInt(addressInBits.substr(i * 8, 8), 2)}.`;
+
+        return firstUsableHostAddress.substr(0, firstUsableHostAddress.length - 1);
+    }
+
+    static getLastUsableHostAddress (address, subnetMask)
+    {
+        let addressInBits = IpAddress.getAddressInBits(IpAddress.getBroadcastAddress(address, subnetMask));
+
+        addressInBits = (addressInBits.substr(0, addressInBits.lastIndexOf("1")) + "0").replace(/\./g, "");
+
+        let lastUsableHostAddress = "";
+
+        for (let i = 0; i < 4; i++)
+            lastUsableHostAddress += `${parseInt(addressInBits.substr(i * 8, 8), 2)}.`;
+
+        return lastUsableHostAddress.substr(0, lastUsableHostAddress.length - 1);
+    }
+
+    static getNthAddress (baseAddress, offset)
+    {
+        const addressParts = baseAddress.split(".").map(Number);
+
+        let remainder = offset;
+
+        for (let i = 0; remainder > 0 && i < 4; i++)
+        {
+            addressParts[3 - i] += remainder;
+
+            remainder = addressParts[3 - i] > 255 ? addressParts[3 - i] - 255 : 0;
+        }
+
+        return addressParts.join(".");
+    }
 }
