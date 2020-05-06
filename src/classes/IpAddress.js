@@ -159,7 +159,13 @@ export class IpAddress
         {
             addressParts[3 - i] += remainder;
 
-            remainder = addressParts[3 - i] > 255 ? addressParts[3 - i] - 255 : 0;
+            if (addressParts[3 - i] > 255)
+            {
+                remainder = Math.trunc(addressParts[3 - i] / 255);
+
+                addressParts[3 - i] = addressParts[3 - i] % 255;
+            }
+            else remainder = 0;
         }
 
         return addressParts.join(".");

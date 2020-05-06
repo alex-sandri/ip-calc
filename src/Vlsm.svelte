@@ -45,17 +45,19 @@
 
                     const maxNumOfHosts = IpAddress.getMaxNumberOfHosts(minimumSubnetMask);
 
+                    const networkAddress = IpAddress.getNetworkAddress(address, minimumSubnetMask);
+
                     const data = [
                         subnet.querySelector(".subnet-name").value,
                         subnetSize,
                         maxNumOfHosts,
                         `${minimumSubnetMask} (${IpAddress.convertSubnetMask(minimumSubnetMask, "slash")})`,
-                        IpAddress.getNetworkAddress(address, minimumSubnetMask),
+                        networkAddress,
                         `${IpAddress.getFirstUsableHostAddress(address, minimumSubnetMask)} - ${IpAddress.getLastUsableHostAddress(address, minimumSubnetMask)}`,
                         IpAddress.getBroadcastAddress(address, minimumSubnetMask)
                     ];
 
-                    address = IpAddress.getNthAddress(address, maxNumOfHosts + 2);
+                    address = IpAddress.getNthAddress(networkAddress, maxNumOfHosts + 2);
 
                     const tr = document.createElement("tr");
 
