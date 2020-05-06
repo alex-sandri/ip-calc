@@ -2,6 +2,7 @@
 	import { IpAddress } from "./classes/IpAddress";
 
     let valid = false;
+    let showTable = false;
 
     let ipAddress = "172.31.103.0", subnetMask = "/24", numOfSubnets = 5;
 
@@ -14,7 +15,7 @@
 
     const reset = () =>
     {
-        valid = false;
+        valid = showTable = false;
 
         ipAddress = subnetMask = numOfSubnets = subnetContainer.innerHTML = "";
 
@@ -58,6 +59,8 @@
 
             table.appendChild(tr);
         });
+
+        showTable = true;
     }
 
     const createSubnetInputs = () =>
@@ -111,7 +114,7 @@
 		on:click={calc}>Calc</button>
     <button
         on:click={reset}>Reset</button>
-    <table bind:this={table}>
+    <table bind:this={table} class="{showTable ? "show" : ""}">
         <tr class="head">
             <th>Subnet Name</th>
 			<th>Needed Size</th>
@@ -145,6 +148,11 @@
     {
         width: 100%;
         border: var(--border-width) solid var(--secondary-color);
+    }
+
+    table:not(.show)
+    {
+        display: none;
     }
 
     table :global(td, th)
