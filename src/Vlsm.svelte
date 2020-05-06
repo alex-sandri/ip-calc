@@ -133,6 +133,7 @@
 		disabled={!valid}
 		on:click={calc}>Calc</button>
     <button
+        class="no-margin-bottom"
         on:click={reset}>Reset</button>
     <div class="table-container">
         <table bind:this={table} class="{showTable ? "show" : ""}">
@@ -172,6 +173,7 @@
     .table-container
     {
         overflow: auto;
+        margin-top: var(--spacing);
     }
 
     table

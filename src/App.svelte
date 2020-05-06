@@ -31,6 +31,7 @@
 	{
 		border: calc(var(--border-width) / 2) solid var(--secondary-color);
 		border-radius: var(--border-radius);
+		margin: var(--spacing) 0;
 	}
 
 	:global(h1)
@@ -48,6 +49,11 @@
 		transition: var(--transition-duration);
 		margin: 0;
 		margin-bottom: var(--spacing);
+	}
+
+	:global(.no-margin-bottom)
+	{
+		margin-bottom: 0;
 	}
 
 	:global(button)
