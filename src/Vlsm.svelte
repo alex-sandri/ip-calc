@@ -7,23 +7,32 @@
 
     let subnetContainer;
 
-    const validate = () => valid = IpAddress.isValidIpAddress(ipAddress) && IpAddress.isValidSubnetMask(subnetMask);
+    const validate = () => valid = IpAddress.isValidIpAddress(ipAddress) &&
+        IpAddress.isValidSubnetMask(subnetMask) &&
+        Number.isInteger(numOfSubnets) &&
+        Array.from(subnetContainer.children).every(element => element.querySelector(".subnet-name").value.length > 0 && Number.isInteger(parseInt(element.querySelector(".subnet-size").value)));
 
     const reset = () =>
     {
         valid = false;
 
-        ipAddress = subnetMask = numOfSubnets = "";
+        ipAddress = subnetMask = numOfSubnets = subnetContainer.innerHTML = "";
     }
 
 	const calc = () =>
-    { }
+    {
+
+    }
 
     const createSubnetInputs = () =>
     {
+        subnetContainer.innerHTML = "";
+
         for (let i = 0; i < numOfSubnets; i++)
             subnetContainer.insertAdjacentHTML(
-                "beforeend", `<div class="subnet"><input type="text" class="subnet-name" value="Subnet${i + 1}"><input type="text" class="subnet-size" placeholder="Size"></div>`);
+                "beforeend", `<div class="subnet"><input type="text" class="subnet-name" value="Subnet${i + 1}"><input type="number" class="subnet-size" placeholder="Size"></div>`);
+
+        subnetContainer.querySelectorAll("input").forEach(input => input.addEventListener("input", validate));
     }
 </script>
 
