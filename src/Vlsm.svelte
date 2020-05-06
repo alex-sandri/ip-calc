@@ -23,7 +23,7 @@
     {
         for (let i = 0; i < numOfSubnets; i++)
             subnetContainer.insertAdjacentHTML(
-                "beforeend", `<div class="subnet"><input type="text" class="subnet-name" value="Subnet${i + 1}"><input type="text" class="subnet-size"></div>`);
+                "beforeend", `<div class="subnet"><input type="text" class="subnet-name" value="Subnet${i + 1}"><input type="text" class="subnet-size" placeholder="Size"></div>`);
     }
 </script>
 
