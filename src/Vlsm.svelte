@@ -24,6 +24,10 @@
 
 	const calc = () =>
     {
+        let address = ipAddress;
+
+        table.querySelectorAll("tr:not(.head)").forEach(element => element.remove());
+
         Array.from(subnetContainer.children).forEach(subnet =>
         {
             const subnetSize = parseInt(subnet.querySelector(".subnet-size").value);
@@ -32,7 +36,7 @@
 
             const maxNumOfHosts = IpAddress.getMaxNumberOfHosts(minimumSubnetMask);
 
-            const networkAddress = IpAddress.getNetworkAddress(ipAddress, minimumSubnetMask);
+            const networkAddress = IpAddress.getNetworkAddress(address, minimumSubnetMask);
 
             const data = [
                 subnet.querySelector(".subnet-name").value,
@@ -40,11 +44,11 @@
                 maxNumOfHosts,
                 `${minimumSubnetMask} (${IpAddress.convertSubnetMask(minimumSubnetMask, "slash")})`,
                 networkAddress,
-                `${IpAddress.getFirstUsableHostAddress(ipAddress, minimumSubnetMask)} - ${IpAddress.getLastUsableHostAddress(ipAddress, minimumSubnetMask)}`,
-                IpAddress.getBroadcastAddress(ipAddress, minimumSubnetMask)
+                `${IpAddress.getFirstUsableHostAddress(address, minimumSubnetMask)} - ${IpAddress.getLastUsableHostAddress(address, minimumSubnetMask)}`,
+                IpAddress.getBroadcastAddress(address, minimumSubnetMask)
             ];
 
-            ipAddress = IpAddress.getNthAddress(ipAddress, maxNumOfHosts + 2);
+            address = IpAddress.getNthAddress(address, maxNumOfHosts + 2);
 
             const tr = document.createElement("tr");
 
