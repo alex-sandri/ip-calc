@@ -107,7 +107,6 @@
     </div>
     <div id="subnets" bind:this={subnetContainer}></div>
 	<button
-		class="calc"
 		disabled={!valid}
 		on:click={calc}>Calc</button>
     <button

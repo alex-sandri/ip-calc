@@ -33,7 +33,6 @@
 		bind:value={numOfHostsNeeded}
         on:input={validate}>
 	<button
-		class="calc"
 		disabled={!valid}
 		on:click={calc}>Calc</button>
     <button
