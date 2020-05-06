@@ -102,6 +102,7 @@
             placeholder="4"
             bind:value={numOfSubnets}>
         <button
+            disabled={!numOfSubnets}
             on:click={createSubnetInputs}>Create</button>
     </div>
     <div id="subnets" bind:this={subnetContainer}></div>
