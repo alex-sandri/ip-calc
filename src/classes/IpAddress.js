@@ -94,7 +94,7 @@ export class IpAddress
         return IpAddress.convertSubnetMask(`/${32 - Math.log2(power)}`, format || "dot-decimal");
     }
 
-    static getAddressInBits (address) { return address.split(".").map(num => parseInt(num).toString(2).padStart(8, "0")).join("."); }
+    static getAddressInBits (address, dotSeparated) { return address.split(".").map(num => parseInt(num).toString(2).padStart(8, "0")).join(dotSeparated ? "." : ""); }
 
     static isClassful (address, subnetMask)
     {
@@ -125,7 +125,7 @@ export class IpAddress
     {
         let addressInBits = IpAddress.getAddressInBits(IpAddress.getNetworkAddress(address, subnetMask));
 
-        addressInBits = (addressInBits.substr(0, addressInBits.lastIndexOf("0")) + "1").replace(/\./g, "");
+        addressInBits = (addressInBits.substr(0, addressInBits.lastIndexOf("0")) + "1");
 
         let firstUsableHostAddress = "";
 
@@ -139,7 +139,7 @@ export class IpAddress
     {
         let addressInBits = IpAddress.getAddressInBits(IpAddress.getBroadcastAddress(address, subnetMask));
 
-        addressInBits = (addressInBits.substr(0, addressInBits.lastIndexOf("1")) + "0").replace(/\./g, "");
+        addressInBits = (addressInBits.substr(0, addressInBits.lastIndexOf("1")) + "0");
 
         let lastUsableHostAddress = "";
 
@@ -149,7 +149,7 @@ export class IpAddress
         return lastUsableHostAddress.substr(0, lastUsableHostAddress.length - 1);
     }
 
-    static getNthAddress (baseAddress, offset)
+    static getNthAddress (baseAddress, offset, subnetMask)
     {
         const addressParts = baseAddress.split(".").map(Number);
 
@@ -168,6 +168,26 @@ export class IpAddress
             else remainder = 0;
         }
 
-        return addressParts.join(".");
+        let address = addressParts.join(".");
+
+        if (!IpAddress.isAddressIncludedInSubnet(address, IpAddress.getNetworkAddress(baseAddress, subnetMask), subnetMask))
+            throw new Error("ip-address/out-of-range");
+
+        return address;
+    }
+
+    static isAddressIncludedInSubnet (address, networkAddress, subnetMask)
+    {
+        let addressBits = IpAddress.getAddressInBits(address);
+        let networkAddressBits = IpAddress.getAddressInBits(networkAddress);
+        
+        let subnetMaskBitCount = IpAddress.getSubnetBitCount(subnetMask);
+
+        return addressBits.substr(0, subnetMaskBitCount) === networkAddressBits.substr(0, subnetMaskBitCount);
+    }
+
+    static getSubnetMaskInBits (subnetMask, dotSeparated)
+    {
+        return IpAddress.getAddressInBits(IpAddress.convertSubnetMask(subnetMask, "dot-decimal"), dotSeparated);
     }
 }

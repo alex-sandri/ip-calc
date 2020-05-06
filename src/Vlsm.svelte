@@ -57,7 +57,7 @@
                         IpAddress.getBroadcastAddress(address, minimumSubnetMask)
                     ];
 
-                    address = IpAddress.getNthAddress(networkAddress, maxNumOfHosts + 2);
+                    address = IpAddress.getNthAddress(networkAddress, maxNumOfHosts + 2, subnetMask);
 
                     const tr = document.createElement("tr");
 
