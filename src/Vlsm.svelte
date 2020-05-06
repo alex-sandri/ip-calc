@@ -28,39 +28,45 @@
 
         table.querySelectorAll("tr:not(.head)").forEach(element => element.remove());
 
-        Array.from(subnetContainer.children).forEach(subnet =>
-        {
-            const subnetSize = parseInt(subnet.querySelector(".subnet-size").value);
+        const collator = new Intl.Collator(undefined, { numeric: true });
 
-            const minimumSubnetMask = IpAddress.minimumSubnetMask(subnetSize, "dot-decimal");
-
-            const maxNumOfHosts = IpAddress.getMaxNumberOfHosts(minimumSubnetMask);
-
-            const data = [
-                subnet.querySelector(".subnet-name").value,
-                subnetSize,
-                maxNumOfHosts,
-                `${minimumSubnetMask} (${IpAddress.convertSubnetMask(minimumSubnetMask, "slash")})`,
-                IpAddress.getNetworkAddress(address, minimumSubnetMask),
-                `${IpAddress.getFirstUsableHostAddress(address, minimumSubnetMask)} - ${IpAddress.getLastUsableHostAddress(address, minimumSubnetMask)}`,
-                IpAddress.getBroadcastAddress(address, minimumSubnetMask)
-            ];
-
-            address = IpAddress.getNthAddress(address, maxNumOfHosts + 2);
-
-            const tr = document.createElement("tr");
-
-            data.forEach(item =>
+        Array
+            .from(subnetContainer.children)
+            .sort((a, b) => collator.compare(a.querySelector(".subnet-size").value, b.querySelector(".subnet-size").value))
+            .reverse()
+            .forEach(subnet =>
             {
-                const td = document.createElement("td");
+                const subnetSize = parseInt(subnet.querySelector(".subnet-size").value);
 
-                td.innerText = item;
+                const minimumSubnetMask = IpAddress.minimumSubnetMask(subnetSize, "dot-decimal");
 
-                tr.appendChild(td);
+                const maxNumOfHosts = IpAddress.getMaxNumberOfHosts(minimumSubnetMask);
+
+                const data = [
+                    subnet.querySelector(".subnet-name").value,
+                    subnetSize,
+                    maxNumOfHosts,
+                    `${minimumSubnetMask} (${IpAddress.convertSubnetMask(minimumSubnetMask, "slash")})`,
+                    IpAddress.getNetworkAddress(address, minimumSubnetMask),
+                    `${IpAddress.getFirstUsableHostAddress(address, minimumSubnetMask)} - ${IpAddress.getLastUsableHostAddress(address, minimumSubnetMask)}`,
+                    IpAddress.getBroadcastAddress(address, minimumSubnetMask)
+                ];
+
+                address = IpAddress.getNthAddress(address, maxNumOfHosts + 2);
+
+                const tr = document.createElement("tr");
+
+                data.forEach(item =>
+                {
+                    const td = document.createElement("td");
+
+                    td.innerText = item;
+
+                    tr.appendChild(td);
+                });
+
+                table.appendChild(tr);
             });
-
-            table.appendChild(tr);
-        });
 
         showTable = true;
     }
