@@ -31,8 +31,7 @@
 		min="1"
 		placeholder="254"
 		bind:value={numOfHostsNeeded}
-		on:input={validate}
-		on:keydown={e => { if ([ "+", "-", "e", ".", "unidentified" ].includes(e.key.toLowerCase())) e.preventDefault(); }}>
+		on:input={validate}>
 	<button
 		disabled={!valid}
 		on:click={calc}>Calc</button>
