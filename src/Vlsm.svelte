@@ -5,7 +5,7 @@
     let showTable = false;
     let showError = false;
 
-    let ipAddress = "172.31.103.0", subnetMask = "/24", numOfSubnets = 5;
+    let ipAddress, subnetMask, numOfSubnets;
 
     let subnetContainer, table;
 
