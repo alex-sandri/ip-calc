@@ -3,6 +3,7 @@
 
     let valid = false;
     let showTable = false;
+    let showError = false;
 
     let ipAddress = "172.31.103.0", subnetMask = "/24", numOfSubnets = 5;
 
@@ -15,7 +16,7 @@
 
     const reset = () =>
     {
-        valid = showTable = false;
+        valid = showTable = showError = false;
 
         ipAddress = subnetMask = numOfSubnets = subnetContainer.innerHTML = "";
 
@@ -30,45 +31,49 @@
 
         const collator = new Intl.Collator(undefined, { numeric: true });
 
-        Array
-            .from(subnetContainer.children)
-            .sort((a, b) => collator.compare(a.querySelector(".subnet-size").value, b.querySelector(".subnet-size").value))
-            .reverse()
-            .forEach(subnet =>
-            {
-                const subnetSize = parseInt(subnet.querySelector(".subnet-size").value);
-
-                const minimumSubnetMask = IpAddress.minimumSubnetMask(subnetSize, "dot-decimal");
-
-                const maxNumOfHosts = IpAddress.getMaxNumberOfHosts(minimumSubnetMask);
-
-                const data = [
-                    subnet.querySelector(".subnet-name").value,
-                    subnetSize,
-                    maxNumOfHosts,
-                    `${minimumSubnetMask} (${IpAddress.convertSubnetMask(minimumSubnetMask, "slash")})`,
-                    IpAddress.getNetworkAddress(address, minimumSubnetMask),
-                    `${IpAddress.getFirstUsableHostAddress(address, minimumSubnetMask)} - ${IpAddress.getLastUsableHostAddress(address, minimumSubnetMask)}`,
-                    IpAddress.getBroadcastAddress(address, minimumSubnetMask)
-                ];
-
-                address = IpAddress.getNthAddress(address, maxNumOfHosts + 2);
-
-                const tr = document.createElement("tr");
-
-                data.forEach(item =>
+        try
+        {
+            Array
+                .from(subnetContainer.children)
+                .sort((a, b) => collator.compare(a.querySelector(".subnet-size").value, b.querySelector(".subnet-size").value))
+                .reverse()
+                .forEach(subnet =>
                 {
-                    const td = document.createElement("td");
+                    const subnetSize = parseInt(subnet.querySelector(".subnet-size").value);
 
-                    td.innerText = item;
+                    const minimumSubnetMask = IpAddress.minimumSubnetMask(subnetSize, "dot-decimal");
 
-                    tr.appendChild(td);
+                    const maxNumOfHosts = IpAddress.getMaxNumberOfHosts(minimumSubnetMask);
+
+                    const data = [
+                        subnet.querySelector(".subnet-name").value,
+                        subnetSize,
+                        maxNumOfHosts,
+                        `${minimumSubnetMask} (${IpAddress.convertSubnetMask(minimumSubnetMask, "slash")})`,
+                        IpAddress.getNetworkAddress(address, minimumSubnetMask),
+                        `${IpAddress.getFirstUsableHostAddress(address, minimumSubnetMask)} - ${IpAddress.getLastUsableHostAddress(address, minimumSubnetMask)}`,
+                        IpAddress.getBroadcastAddress(address, minimumSubnetMask)
+                    ];
+
+                    address = IpAddress.getNthAddress(address, maxNumOfHosts + 2);
+
+                    const tr = document.createElement("tr");
+
+                    data.forEach(item =>
+                    {
+                        const td = document.createElement("td");
+
+                        td.innerText = item;
+
+                        tr.appendChild(td);
+                    });
+
+                    table.appendChild(tr);
                 });
 
-                table.appendChild(tr);
-            });
-
-        showTable = true;
+            showTable = true;
+        }
+        catch (err) { showError = true; }
     }
 
     const createSubnetInputs = () =>
@@ -133,6 +138,9 @@
 			<th>Broadcast Address</th>
         </tr>
     </table>
+    {#if showError}
+        <p class="error">Subnetting error!!!</p>
+    {/if}
 </div>
 
 <style>
@@ -166,6 +174,15 @@
     table :global(td, th)
     {
         border: var(--border-width) solid var(--secondary-color);
+        text-align: center;
+    }
+
+    .error
+    {
+        margin: 0;
+        font-size: x-large;
+        color: red;
+        font-weight: 900;
         text-align: center;
     }
 </style>
