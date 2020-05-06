@@ -45,7 +45,6 @@
 		placeholder="192.168.1.1"
 		bind:value={ipAddress}
         on:input={validate}>
-	<h1>Subnet Mask:</h1>
 	<label for="subnet-mask">Subnet mask</label>
 	<input
 		type="text"
