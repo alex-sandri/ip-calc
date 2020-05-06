@@ -36,14 +36,12 @@
 
             const maxNumOfHosts = IpAddress.getMaxNumberOfHosts(minimumSubnetMask);
 
-            const networkAddress = IpAddress.getNetworkAddress(address, minimumSubnetMask);
-
             const data = [
                 subnet.querySelector(".subnet-name").value,
                 subnetSize,
                 maxNumOfHosts,
                 `${minimumSubnetMask} (${IpAddress.convertSubnetMask(minimumSubnetMask, "slash")})`,
-                networkAddress,
+                IpAddress.getNetworkAddress(address, minimumSubnetMask),
                 `${IpAddress.getFirstUsableHostAddress(address, minimumSubnetMask)} - ${IpAddress.getLastUsableHostAddress(address, minimumSubnetMask)}`,
                 IpAddress.getBroadcastAddress(address, minimumSubnetMask)
             ];
