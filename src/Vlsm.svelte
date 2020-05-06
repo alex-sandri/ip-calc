@@ -5,7 +5,7 @@
 
     let ipAddress = "172.31.103.0", subnetMask = "/24", numOfSubnets = 5;
 
-    let subnetContainer;
+    let subnetContainer, table;
 
     const validate = () => valid = IpAddress.isValidIpAddress(ipAddress) &&
         IpAddress.isValidSubnetMask(subnetMask) &&
@@ -17,21 +17,46 @@
         valid = false;
 
         ipAddress = subnetMask = numOfSubnets = subnetContainer.innerHTML = "";
+
+        table.querySelectorAll("tr:not(.head)").forEach(element => element.remove());
     }
 
 	const calc = () =>
     {
         Array.from(subnetContainer.children).forEach(subnet =>
         {
-            const minimumSubnetMask = IpAddress.minimumSubnetMask(parseInt(subnet.querySelector(".subnet-size").value), "slash");
+            const subnetSize = parseInt(subnet.querySelector(".subnet-size").value);
+
+            const minimumSubnetMask = IpAddress.minimumSubnetMask(subnetSize, "dot-decimal");
 
             const maxNumOfHosts = IpAddress.getMaxNumberOfHosts(minimumSubnetMask);
 
             const networkAddress = IpAddress.getNetworkAddress(ipAddress, minimumSubnetMask);
 
-            console.log(minimumSubnetMask, maxNumOfHosts, networkAddress, IpAddress.getFirstUsableHostAddress(ipAddress, minimumSubnetMask), IpAddress.getLastUsableHostAddress(ipAddress, minimumSubnetMask));
+            const data = [
+                subnet.querySelector(".subnet-name").value,
+                subnetSize,
+                maxNumOfHosts,
+                `${minimumSubnetMask} (${IpAddress.convertSubnetMask(minimumSubnetMask, "slash")})`,
+                networkAddress,
+                `${IpAddress.getFirstUsableHostAddress(ipAddress, minimumSubnetMask)} - ${IpAddress.getLastUsableHostAddress(ipAddress, minimumSubnetMask)}`,
+                IpAddress.getBroadcastAddress(ipAddress, minimumSubnetMask)
+            ];
 
             ipAddress = IpAddress.getNthAddress(ipAddress, maxNumOfHosts + 2);
+
+            const tr = document.createElement("tr");
+
+            data.forEach(item =>
+            {
+                const td = document.createElement("td");
+
+                td.innerText = item;
+
+                tr.appendChild(td);
+            });
+
+            table.appendChild(tr);
         });
     }
 
@@ -86,6 +111,17 @@
 		on:click={calc}>Calc</button>
     <button
         on:click={reset}>Reset</button>
+    <table bind:this={table}>
+        <tr class="head">
+            <th>Subnet Name</th>
+			<th>Needed Size</th>
+			<th>Allocated Size</th>
+			<th>Subnet Mask</th>
+            <th>Network Address</th>
+			<th>Assignable Range</th>
+			<th>Broadcast Address</th>
+        </tr>
+    </table>
 </div>
 
 <style>
@@ -103,5 +139,17 @@
     #subnets :global(.subnet .subnet-size)
     {
         margin-left: var(--spacing);
+    }
+
+    table
+    {
+        width: 100%;
+        border: var(--border-width) solid var(--secondary-color);
+    }
+
+    table :global(td, th)
+    {
+        border: var(--border-width) solid var(--secondary-color);
+        text-align: center;
     }
 </style>
