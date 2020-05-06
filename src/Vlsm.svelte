@@ -25,17 +25,9 @@
         
         for (let i = 0; i < parseInt(numOfSubnets); i++)
         {
-            const subnetElement = document.createElement("div");
+            const subnetElementString = `<div class="subnet"><input class="subnet-name" value="Subnet${i + 1}"><input class="subnet-size"></div>`;
 
-            subnetElement.classList.add("subnet");
-
-            const subnetNameInput = document.createElement("input");
-
-            subnetNameInput.value = `Subnet${i + 1}`;
-
-            subnetElement.appendChild(subnetNameInput);
-
-            subnetContainer.appendChild(subnetElement);
+            subnetContainer.insertAdjacentHTML("beforeend", subnetElementString);
         }
     }
 </script>
