@@ -23,7 +23,8 @@
 </script>
 
 <div>
-	<h1>Number of hosts needed:</h1>
+	<h1>Minimum Subnet Mask</h1>
+	<label for="subnet-mask-sn">Number of hosts needed</label>
 	<input
 		type="number"
 		id="num-of-hosts"
@@ -48,4 +49,10 @@
 	{/if}
 </div>
 
-<style></style>
+<style>
+	label
+	{
+		display: inline-block;
+		margin-bottom: calc(var(--spacing) / 2);
+	}
+</style>

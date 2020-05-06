@@ -1,7 +1,7 @@
 <script>
 	import Header from "./Header.svelte";
 	import IpAddressInfo from "./IpAddressInfo.svelte";
-	import NumOfHostsNeeded from "./NumOfHostsNeeded.svelte";
+	import MinimumSubnetMask from "./MinimumSubnetMask.svelte";
 	import Vlsm from "./Vlsm.svelte";
 </script>
 
@@ -16,7 +16,7 @@
 <main>
 	<IpAddressInfo/>
 	<hr>
-	<NumOfHostsNeeded/>
+	<MinimumSubnetMask/>
 	<hr>
 	<Vlsm/>
 </main>
