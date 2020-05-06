@@ -24,7 +24,7 @@
 
 <div>
 	<h1>Minimum Subnet Mask</h1>
-	<label for="subnet-mask-sn">Number of hosts needed</label>
+	<label for="num-of-hosts">Number of hosts needed</label>
 	<input
 		type="number"
 		id="num-of-hosts"

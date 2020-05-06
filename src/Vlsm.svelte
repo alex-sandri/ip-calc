@@ -62,7 +62,7 @@
 	<input
 		type="text"
 		id="subnet-mask"
-		minlength="9"
+		minlength="2"
 		maxlength="15"
 		placeholder="255.255.255.0 or /24"
 		bind:value={subnetMask}
