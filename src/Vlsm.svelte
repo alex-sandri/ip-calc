@@ -71,9 +71,14 @@
                     table.appendChild(tr);
                 });
 
+            showError = false;
             showTable = true;
         }
-        catch (err) { showError = true; }
+        catch (err)
+        {
+            showTable = false;
+            showError = true;
+        }
     }
 
     const createSubnetInputs = () =>
@@ -127,17 +132,19 @@
 		on:click={calc}>Calc</button>
     <button
         on:click={reset}>Reset</button>
-    <table bind:this={table} class="{showTable ? "show" : ""}">
-        <tr class="head">
-            <th>Subnet Name</th>
-			<th>Needed Size</th>
-			<th>Allocated Size</th>
-			<th>Subnet Mask</th>
-            <th>Network Address</th>
-			<th>Assignable Range</th>
-			<th>Broadcast Address</th>
-        </tr>
-    </table>
+    <div class="table-container">
+        <table bind:this={table} class="{showTable ? "show" : ""}">
+            <tr class="head">
+                <th>Subnet Name</th>
+                <th>Needed Size</th>
+                <th>Allocated Size</th>
+                <th>Subnet Mask</th>
+                <th>Network Address</th>
+                <th>Assignable Range</th>
+                <th>Broadcast Address</th>
+            </tr>
+        </table>
+    </div>
     {#if showError}
         <p class="error">Subnetting error!!!</p>
     {/if}
@@ -160,6 +167,11 @@
         margin-left: var(--spacing);
     }
 
+    .table-container
+    {
+        overflow: auto;
+    }
+
     table
     {
         width: 100%;
@@ -175,6 +187,8 @@
     {
         border: var(--border-width) solid var(--secondary-color);
         text-align: center;
+        white-space: nowrap;
+        padding: 5px;
     }
 
     .error
