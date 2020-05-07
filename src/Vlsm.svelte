@@ -135,8 +135,8 @@
     <button
         class="no-margin-bottom"
         on:click={reset}>Reset</button>
-    <div class="table-container">
-        <table bind:this={table} class="{showTable ? "show" : ""}">
+    <div class="table-container {showTable ? "show" : ""}">
+        <table bind:this={table}>
             <tr class="head">
                 <th>Subnet Name</th>
                 <th>Needed Size</th>
@@ -176,15 +176,15 @@
         margin-top: var(--spacing);
     }
 
+    .table-container:not(.show)
+    {
+        display: none;
+    }
+
     table
     {
         width: 100%;
         border: var(--border-width) solid var(--secondary-color);
-    }
-
-    table:not(.show)
-    {
-        display: none;
     }
 
     table :global(td, th)
