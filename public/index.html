@@ -14,5 +14,25 @@
 </head>
 
 <body>
+	<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-analytics.js"></script>
+	<script>
+		const firebaseConfig = {
+			apiKey: "AIzaSyAL-loVu1048fDH1kIvc5TiGhHVu0361qg",
+			authDomain: "ip-calc.firebaseapp.com",
+			databaseURL: "https://ip-calc.firebaseio.com",
+			projectId: "ip-calc",
+			storageBucket: "ip-calc.appspot.com",
+			messagingSenderId: "173826847533",
+			appId: "1:173826847533:web:5f2e042e3a979bcda819a4",
+			measurementId: "G-SRN0DSVZMR"
+		};
+
+		firebase.initializeApp(firebaseConfig);
+
+		const analytics = firebase.analytics();
+
+		analytics.setAnalyticsCollectionEnabled(!navigator.doNotTrack);
+	</script>
 </body>
 </html>
