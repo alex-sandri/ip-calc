@@ -3,7 +3,7 @@
     
     let valid = false;
 
-	let showResult = false, isClassfulAddress = false;
+	let showResult = false, isClassfulAddress = false, isPrivateAddress;
 
 	let ipAddress, subnetMask;
 
@@ -29,6 +29,8 @@
 		isClassfulAddress = IpAddress.isClassful(ipAddress, subnetMask);
 
 		if (isClassfulAddress) addressClass = IpAddress.getClass(ipAddress);
+
+		isPrivateAddress = IpAddress.isPrivate(ipAddress, subnetMask);
 
 		showResult = true;
 	}
@@ -84,6 +86,10 @@
 					{addressClass}
 				</p>
 			{/if}
+			<p>
+				<span>Private</span>
+				{isPrivateAddress}
+			</p>
 		</div>
 	{/if}
 </div>

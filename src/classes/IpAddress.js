@@ -190,4 +190,14 @@ export class IpAddress
     {
         return IpAddress.getAddressInBits(IpAddress.convertSubnetMask(subnetMask, "dot-decimal"), dotSeparated);
     }
+
+    static isPrivate (address, subnetMask)
+    {
+        const slashSubnetMask = IpAddress.convertSubnetMask(subnetMask, "slash");
+
+        // TODO: Add support for class D and E (this classes do not have a subnet mask)
+        return (address.startsWith("10.") && slashSubnetMask === "/8") ||
+            IpAddress.isAddressIncludedInSubnet(address, IpAddress.getNetworkAddress("172.16.0.0", "/12"), "/12") ||
+            (address.startsWith("192.168.") && slashSubnetMask === "/16");
+    }
 }
