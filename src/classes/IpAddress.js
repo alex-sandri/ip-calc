@@ -96,31 +96,6 @@ export class IpAddress
 
     static getAddressInBits (address, dotSeparated) { return address.split(".").map(num => parseInt(num).toString(2).padStart(8, "0")).join(dotSeparated ? "." : ""); }
 
-    static isClassful (address, subnetMask)
-    {
-        const addressClass = IpAddress.getClass(address);
-        const slashSubnetMask = IpAddress.convertSubnetMask(subnetMask, "slash");
-
-        // TODO: Add support for class D and E (this classes do not have a subnet mask)
-        return (addressClass === "A" && slashSubnetMask === "/8") ||
-            (addressClass === "B" && slashSubnetMask === "/16") ||
-            (addressClass === "C" && slashSubnetMask === "/24");
-    }
-
-    static getClass (address)
-    {
-        let addressInBits = IpAddress.getAddressInBits(address);
-        let addressClass = "";
-
-        if (addressInBits.startsWith("0")) addressClass = "A";
-        else if (addressInBits.startsWith("10")) addressClass = "B";
-        else if (addressInBits.startsWith("110")) addressClass = "C";
-        else if (addressInBits.startsWith("1110")) addressClass = "D";
-        else if (addressInBits.startsWith("1111")) addressClass = "E";
-
-        return addressClass;
-    }
-
     static getFirstUsableHostAddress (address, subnetMask)
     {
         let addressInBits = IpAddress.getAddressInBits(IpAddress.getNetworkAddress(address, subnetMask));

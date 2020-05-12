@@ -3,7 +3,7 @@
     
     let valid = false;
 
-	let showResult = false, isClassfulAddress = false, isPrivateAddress;
+	let showResult = false, isPrivateAddress;
 
 	let ipAddress, subnetMask;
 
@@ -25,10 +25,6 @@
 		networkAddress = IpAddress.getNetworkAddress(ipAddress, subnetMask);
 		broadcastAddress = IpAddress.getBroadcastAddress(ipAddress, subnetMask);
 		maxNumOfHosts = IpAddress.getMaxNumberOfHosts(subnetMask);
-
-		isClassfulAddress = IpAddress.isClassful(ipAddress, subnetMask);
-
-		if (isClassfulAddress) addressClass = IpAddress.getClass(ipAddress);
 
 		isPrivateAddress = IpAddress.isPrivate(ipAddress, subnetMask);
 
@@ -76,16 +72,6 @@
 				<span>Maximum number of hosts</span>
 				{maxNumOfHosts}
 			</p>
-			<p>
-				<span>Classful</span>
-				{isClassfulAddress}
-			</p>
-			{#if isClassfulAddress}
-				<p>
-					<span>Address class</span>
-					{addressClass}
-				</p>
-			{/if}
 			<p>
 				<span>Private</span>
 				{isPrivateAddress}
